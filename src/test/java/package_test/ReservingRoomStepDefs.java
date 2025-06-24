@@ -4,19 +4,32 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertEquals;
+
 public class ReservingRoomStepDefs extends AbstractStepDefs {
-    @Given("the {string} field is filled with {string}")
-    public void theFieldIsFilledWithText(String field, String text) {
-        homePage.fillOutReservationField(field, text);
-    }
 
-    @When("the {string} button is clicked")
-    public void theButtonIsClicked(String button) {
-        homePage.clickButton(button);
-    }
-
-    @Then("the {String} message is shown")
+    @Then("the {string} message is shown in reservation")
     public void theErrorMessageIsShown(String msg){
-        assertEquals(msg, homepage.getErrorMessage());
+        List<String> expectedMessages = Arrays.asList(msg.split(";"));
+        List<String> actualMessages = Arrays.stream(homePage.getReserveErrorMessage().split("\\r?\\n"))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+
+        Collections.sort(expectedMessages);
+        Collections.sort(actualMessages);
+
+        assertEquals(expectedMessages, actualMessages);
+    }
+
+    @Then("{string} full screen message is shown.")
+    public void fullScreenErrorMessage(String msg) {
+        assertEquals(msg, homePage.getFullScreenErrorMessage());
     }
 }

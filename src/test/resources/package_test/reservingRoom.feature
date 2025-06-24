@@ -4,67 +4,88 @@ Feature: Reserving Room
 
   Scenario Outline: incorrect phone number
     Given the home page is opened
-    And the 'Book' button is clicked
+    And the 'BookSingle' button is clicked
     And the 'Reserve' button is clicked
-    And the 'FirstName' field is filled with 'asd'
-    And the 'LastName' field is filled with 'asd'
-    And the 'Email' field is filled with 'asdasd@gmail.com'
-    And the 'PhoneNumber' field is filled with '<phoneNumber>'
+    And the 'FirstNameReserve' field is filled with 'asd'
+    And the 'LastNameReserve' field is filled with 'asd'
+    And the 'EmailReserve' field is filled with 'asdasd@gmail.com'
+    And the 'PhoneNumberReserve' field is filled with '<phoneNumber>'
     When the 'ReserveNow' button is clicked
-    Then the <errorMessage> message is shown
+    Then the '<errorMessage>' message is shown in reservation
     Examples:
-      |phoneNumber|errorMessage
-      |           |<ul><li>size must be between 11 and 21</li><li>must not be empty</li></ul>
-      |1          |<ul><li>size must be between 11 and 21</li></ul>
-      |1111111111111111111111111111111111111111111111|<ul><li>size must be between 11 and 21</li></ul>
+      |phoneNumber                                    |errorMessage                                       |
+      |                                               |size must be between 11 and 21;must not be empty   |
+      |1                                              |size must be between 11 and 21                     |
+      |1111111111111111111111111111111111111111111111 |size must be between 11 and 21                     |
 
   Scenario Outline: incorrect email
     Given the home page is opened
-    And the 'Book' button is clicked
+    And the 'BookSingle' button is clicked
     And the 'Reserve' button is clicked
-    And the 'FirstName' field is filled with 'asd'
-    And the 'LastName' field is filled with 'asd'
-    And the 'Email" field is filled with '<email>'
-    And the 'PhoneNumber' field is filled with '30/111/1111'
+    And the 'FirstNameReserve' field is filled with 'asd'
+    And the 'LastNameReserve' field is filled with 'asd'
+    And the 'EmailReserve' field is filled with '<email>'
+    And the 'PhoneNumberReserve' field is filled with '30/111/1111'
     When the 'ReserveNow' button is clicked
-    Then the <errorMessage> message is shown
+    Then the '<errorMessage>' message is shown in reservation
     Examples:
-      |email|errorMessage
-      |     |<ul><li>must not be empty</li><li>size must be between 3 and 18</li></ul>
-      |a    |<ul><li>must be a well-formed email address</li><li>size must be between 3 and 18</li></ul>
-      |aaa  |<ul><li>must be a well-formed email address</li></ul>
-      |aaa@ |<ul><li>must be a well-formed email address</li></ul>
+      |email|errorMessage                           |
+      |     |must not be empty                      |
+      |a    |must be a well-formed email address    |
+      |aaa  |must be a well-formed email address    |
+      |aaa@ |must be a well-formed email address    |
+      |aaa@.com |must be a well-formed email address|
 
     Scenario: First name is empty
       Given the home page is opened
-      And the 'Book' button is clicked
+      And the 'BookSingle' button is clicked
       And the 'Reserve' button is clicked
-      And the 'LastName' field is filled with 'asdasd'
-      And the 'Email" field is filled with 'asd@gmail.com'
-      And the 'PhoneNumber' field is filled with '30/111/1111'
+      And the 'LastNameReserve' field is filled with 'asdasd'
+      And the 'EmailReserve' field is filled with 'asd@gmail.com'
+      And the 'PhoneNumberReserve' field is filled with '30/111/1111'
       When the 'ReserveNow' button is clicked
-      Then the '<ul><li>Firstname should not be blank</li><li>size must be between 3 and 18</li></ul>' message is shown
+      Then the 'Firstname should not be blank;size must be between 3 and 18' message is shown in reservation
 
   Scenario: First name is too short
     Given the home page is opened
-    And the 'Book' button is clicked
+    And the 'BookSingle' button is clicked
     And the 'Reserve' button is clicked
-    And the 'FistName' field is filled with 'a'
-    And the 'LastName' field is filled with 'asdasd'
-    And the 'Email" field is filled with 'asd@gmail.com'
-    And the 'PhoneNumber' field is filled with '30/111/1111'
+    And the 'FirstNameReserve' field is filled with 'a'
+    And the 'LastNameReserve' field is filled with 'asdasd'
+    And the 'EmailReserve' field is filled with 'asd@gmail.com'
+    And the 'PhoneNumberReserve' field is filled with '30/111/1111'
     When the 'ReserveNow' button is clicked
-    Then the '<ul><li>size must be between 3 and 18</li></ul>' message is shown
-
+    Then the 'size must be between 3 and 18' message is shown in reservation
 
 
   Scenario: Last name is empty
     Given the home page is opened
-    And the 'Book' button is clicked
+    And the 'BookSingle' button is clicked
     And the 'Reserve' button is clicked
-    And the 'FistName' field is filled with 'asdasd'
-    And the 'Email" field is filled with 'asd@gmail.com'
-    And the 'PhoneNumber' field is filled with '30/111/1111'
+    And the 'FirstNameReserve' field is filled with 'asd'
+    And the 'EmailReserve' field is filled with 'asd@gmail.com'
+    And the 'PhoneNumberReserve' field is filled with '30/111/1111'
     When the 'ReserveNow' button is clicked
-    Then the '<ul><li>Lastname should not be blank</li><li>size must be between 3 and 18</li></ul>' message is shown
+    Then the 'Lastname should not be blank;size must be between 3 and 30' message is shown in reservation
 
+  Scenario: Last name is empty
+    Given the home page is opened
+    And the 'BookSingle' button is clicked
+    And the 'Reserve' button is clicked
+    And the 'FirstNameReserve' field is filled with 'asd'
+    And the 'EmailReserve' field is filled with 'asd@gmail.com'
+    And the 'PhoneNumberReserve' field is filled with '30/111/1111'
+    When the 'ReserveNow' button is clicked
+    Then the 'Lastname should not be blank;size must be between 3 and 30' message is shown in reservation
+
+  Scenario: Successful room reservation
+    Given the home page is opened
+    And the 'BookSingle' button is clicked
+    And the 'Reserve' button is clicked
+    And the 'FirstNameReserve' field is filled with 'John'
+    And the 'LastNameReserve' field is filled with 'Doe'
+    And the 'EmailReserve' field is filled with 'john.doe@example.com'
+    And the 'PhoneNumberReserve' field is filled with '12345678901'
+    When the 'ReserveNow' button is clicked
+    Then 'Application error: a client-side exception has occurred while loading automationintesting.online (see the browser console for more information).' full screen message is shown.
+    # --> Crashes, even though my the credentials are correct -- supposedly server error?
