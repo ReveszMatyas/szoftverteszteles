@@ -32,3 +32,4 @@ Feature: Adding Rooms - #roomName sometimes not found
       |          | Single   | false          | 100       |
       | 107      | Suite    | true           | 1000      |
 
+

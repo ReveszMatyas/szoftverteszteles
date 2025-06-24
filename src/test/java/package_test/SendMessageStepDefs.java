@@ -30,4 +30,6 @@ public class SendMessageStepDefs extends AbstractStepDefs {
     public void the_message_is_shown_in_message(String string) {
         assertEquals(string, homePage.getContactErrorMessage());
     }
+
+    // test
 }
