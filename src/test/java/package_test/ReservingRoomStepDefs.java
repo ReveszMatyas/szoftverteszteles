@@ -32,4 +32,9 @@ public class ReservingRoomStepDefs extends AbstractStepDefs {
     public void fullScreenErrorMessage(String msg) {
         assertEquals(msg, homePage.getFullScreenErrorMessage());
     }
+
+    @Then("{string} is the div headline for reservation.")
+    public void bookingConfirmedIsTheDivHeadlineForReservation(String str){
+        assertEquals(str, homePage.getReservationHeadlineText());
+    }
 }

@@ -27,10 +27,13 @@ public class HomePage {
     @FindBy(css = "#root-container > div > div.container.my-5 > div > div.col-lg-4 > div > div > form > div.alert.alert-danger")
     private WebElement reserveErrorMessage;
 
+    @FindBy(xpath = "//*[@id=\"root-container\"]/div/div[2]/div/div[2]/div/div/h2")
+    private WebElement reservationHeadline;
+
     @FindBy(css="#contact > div > div > div > div > div > div")
     private static WebElement contactErrorMessage;
 
-    @FindBy(css="#root-container > div > div > div > div > div.col-sm-8 > div > div.card-body > div")
+    @FindBy(xpath="/html/body/div/div/div/div/div/div[2]/div/div[2]/div")
     private WebElement loginErrorMessage;
 
     @FindBy(css = "#root-container > div > div.container.my-5 > div > div.col-lg-4 > div > div > form > div.card.bg-light.border-0.mb-4 > div > div.d-flex.justify-content-between.fw-bold > span:nth-child(2)")
@@ -51,6 +54,8 @@ public class HomePage {
             );
 
     private static final Map<String, By> inputFieldList = new HashMap<>(){{
+        put("CheckInDate",By.xpath("/html/body/div/div/div/section[1]/div/div/div/form/div/div[1]/div/div/input"));
+        put("CheckOutDate",By.xpath("/html/body/div/div/div/section[1]/div/div/div/form/div/div[2]/div/div/input"));
         put("FirstNameReserve", By.cssSelector("#root-container > div > div.container.my-5 > div > div.col-lg-4 > div > div > form > div.input-group.mb-3.room-booking-form > input"));
         put("LastNameReserve", By.cssSelector("#root-container > div > div.container.my-5 > div > div.col-lg-4 > div > div > form > div:nth-child(2) > input"));
         put("EmailReserve", By.cssSelector("#root-container > div > div.container.my-5 > div > div.col-lg-4 > div > div > form > div:nth-child(3) > input"));
@@ -99,7 +104,9 @@ public class HomePage {
     }
 
     public void fillOutField(String field, String text) {
-        driver.findElement(inputFieldList.get(field)).sendKeys(text);
+        WebElement element = driver.findElement(inputFieldList.get(field));
+        element.clear();
+        element.sendKeys(text);
     }
 
     public void setSelectorTo(String selector, String setTo) {
@@ -156,6 +163,17 @@ public class HomePage {
             //wait.until(ExpectedConditions.stalenessOf(button));
         }
     }
+
+
+    public String getReservationHeadlineText() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        return reservationHeadline.getText();
+    }
+
 
     public String getContactErrorMessage() { return contactErrorMessage.getText(); }
 

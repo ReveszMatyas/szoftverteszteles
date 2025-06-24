@@ -30,4 +30,10 @@ public class AdminAddRoomStepDefs extends AbstractStepDefs{
     public void allRoomsAreDeleted() {
         homePage.deleteAllRooms();
     }
+
+    @Then("the number of rooms should be unchanged")
+    public void theNumberOfRoomsShouldBeUnchanged() {
+        int roomCountNow = homePage.countRooms();
+        assertEquals( roomCountBefore, roomCountNow);
+    }
 }
